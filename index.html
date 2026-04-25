@@ -333,6 +333,29 @@
         }
         .consult-check i { color: var(--teal); font-size: 15px; }
         .consult-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+        .consult-badge {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: rgba(46,196,182,0.15); border: 1.5px solid var(--teal);
+            border-radius: 50px; padding: 8px 22px; margin-bottom: 24px;
+        }
+        .consult-badge-label {
+            font-size: 13px; font-weight: 700; color: var(--teal);
+            text-transform: uppercase; letter-spacing: 0.1em;
+        }
+        .consult-free-block {
+            margin-bottom: 20px;
+        }
+        .consult-free-block .free-tag {
+            display: inline-block;
+            font-size: clamp(48px, 8vw, 80px); font-weight: 900;
+            color: var(--teal); line-height: 1;
+            letter-spacing: -2px;
+        }
+        .consult-free-block .free-sub {
+            display: block; font-size: 16px; color: rgba(255,255,255,0.55);
+            font-weight: 400; margin-top: 4px; letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
 
         /* ===== FOOTER ===== */
         footer { background: #090f22; padding: 64px 0 28px; }
@@ -535,7 +558,7 @@
             </div>
             <div class="service-card">
                 <div class="svc-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
-                <h3>Data Scraping & Lead Gen</h3>
+                <h3>Data Scraping & Administration</h3>
                 <p>Intelligent web scraping that extracts and organises business-critical contacts automatically — cutting research time by up to 80%.</p>
             </div>
             <div class="service-card">
@@ -568,7 +591,7 @@
                     <span class="case-pill"><i class="fa-solid fa-circle-check"></i> Zero booking errors</span>
                 </div>
                 <div class="case-body">
-                    <div class="case-industry">Restaurant &nbsp;·&nbsp; n8n + WhatsApp API + Google Calendar</div>
+                    <div class="case-industry">Restaurant</div>
                     <p>Replaced phone calls and manual WhatsApp bookings with an AI agent that checks availability across table sizes, captures reservations, and manages the entire calendar — automatically, 24/7.</p>
                     <a href="blog/case-study-restaurant.html" class="case-link">Read full story <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
@@ -580,7 +603,7 @@
                     <span class="case-pill"><i class="fa-solid fa-circle-check"></i> 80% less research time</span>
                 </div>
                 <div class="case-body">
-                    <div class="case-industry">Training Company &nbsp;·&nbsp; n8n + Gemini + LinkedIn</div>
+                    <div class="case-industry">Training Company</div>
                     <p>Automated the sourcing of HR contacts from thousands of companies via LinkedIn and job portals. The sales team now focuses entirely on outreach and closing — not data collection.</p>
                     <a href="blog/case-study-hr-scraping.html" class="case-link">Read full story <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
@@ -592,7 +615,7 @@
                     <span class="case-pill"><i class="fa-solid fa-circle-check"></i> 1 exec replaces full team</span>
                 </div>
                 <div class="case-body">
-                    <div class="case-industry">Loyalty SaaS &nbsp;·&nbsp; n8n + Puppeteer + Supabase</div>
+                    <div class="case-industry">Loyalty SaaS</div>
                     <p>Built a multi-agent WhatsApp system handling Q&A, portal tasks, and BI reporting — reducing the need for multiple support executives to just one person managing everything via WhatsApp.</p>
                     <a href="blog/case-study-customer-support.html" class="case-link">Read full story <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
@@ -687,20 +710,27 @@
     <div class="consult-glow"></div>
     <div class="container">
         <div class="consult-inner">
-            <span class="section-eyebrow">Free Consultation</span>
+            <div class="consult-badge">
+                <i class="fa-solid fa-gift" style="color:var(--teal); font-size:14px;"></i>
+                <span class="consult-badge-label">Limited Offer — Claim Yours Today</span>
+            </div>
+            <div class="consult-free-block">
+                <span class="free-tag">1 HOUR FREE</span>
+                <span class="free-sub">AI Strategy Consultation — No Strings Attached</span>
+            </div>
             <h2>Not Sure Where to Start?<br>Let Us Diagnose It for You.</h2>
             <p class="sub">
-                Book a free 1-hour consultation with a160z. We'll assess your current operations, identify where AI can save you the most time and money, and give you a clear action plan — no obligation, no hard sell.
+                We'll assess your current operations, identify exactly where AI can save you the most time and money, and hand you a clear action plan — at zero cost, zero obligation.
             </p>
             <div class="consult-checks">
                 <div class="consult-check"><i class="fa-solid fa-check"></i> 100% Free, No Obligation</div>
                 <div class="consult-check"><i class="fa-solid fa-check"></i> Tailored to Your Business</div>
                 <div class="consult-check"><i class="fa-solid fa-check"></i> Clear Action Plan Included</div>
-                <div class="consult-check"><i class="fa-solid fa-check"></i> 1 Hour, Done via WhatsApp or Zoom</div>
+                <div class="consult-check"><i class="fa-solid fa-check"></i> 1 Hour, Done via Meet Up or Zoom</div>
             </div>
             <div class="consult-btns">
-                <a href="https://wa.me/601163974161?text=Hi%20a160z%2C%20I%27d%20like%20to%20book%20a%20free%201-hour%20AI%20consultation%20for%20my%20business." target="_blank" class="btn btn-primary" style="font-size:16px; padding:16px 34px;">
-                    <i class="fa-brands fa-whatsapp"></i> Book via WhatsApp
+                <a href="https://wa.me/601163974161?text=Hi%20a160z%2C%20I%27d%20like%20to%20book%20a%20free%201-hour%20AI%20consultation%20for%20my%20business." target="_blank" class="btn btn-primary" style="font-size:17px; padding:18px 40px;">
+                    <i class="fa-brands fa-whatsapp"></i> Claim My Free 1-Hour Session
                 </a>
                 <a href="mailto:inquiry@a160z.com" class="btn btn-ghost">
                     <i class="fa-solid fa-envelope"></i> Email Us Instead
