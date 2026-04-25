@@ -9,22 +9,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install lftp
-        run: sudo apt-get install -y lftp
-
-      - name: Deploy via FTP
+      - name: Trigger cPanel Git Deployment
         run: |
-          lftp -c "
-            set ftp:passive-mode true;
-            set ssl:verify-certificate no;
-            set ftp:ssl-allow yes;
-            open -u '${{ secrets.FTP_USERNAME }}','${{ secrets.FTP_PASSWORD }}' ftp://${{ secrets.FTP_HOST }};
-            mirror --reverse --delete --verbose \
-              --exclude-glob .git* \
-              --exclude-glob node_modules/ \
-              ./ public_html/a160z.com/;
-            bye
-          "
+          response=$(curl -s -o /tmp/cpanel_response.txt -w "%{http_code}" -X POST \
+            "https://${{ secrets.CPANEL_URL }}:2083/execute/VersionControlDeployment/create" \
+            -H "Authorization: cpanel ${{ secrets.CPANEL_USERNAME }}:${{ secrets.CPANEL_API_TOKEN }}" \
+            --data-urlencode "repository_root=/home/apppaymy/public_html/a160z.com" \
+            --insecure)
+          echo "HTTP Status: $response"
+          cat /tmp/cpanel_response.txt
+          if [ "$response" != "200" ]; then
+            echo "Deployment failed with status $response"
+            exit 1
+          fi
+          echo "Deployment triggered successfully!"
