@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/apppaymy/public_html/a160z.com/
+    - /bin/cp -R $SRCDIR/* $DEPLOYPATH
