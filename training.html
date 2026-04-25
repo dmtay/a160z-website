@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Programmes — a160z | AI Automation Training</title>
+    <meta name="description" content="Hands-on AI automation training by a160z. Learn to build n8n workflows, AI agents, WhatsApp integrations, and more — trained by practitioners who build real systems.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #fff; line-height: 1.6; }
+        :root {
+            --navy: #1e2a6e; --navy-dark: #16213e;
+            --teal: #2ec4b6; --teal-dark: #22a89b;
+            --gray-light: #f8f9fc; --gray: #64748b; --border: #e2e8f0;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+        .section-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--teal); margin-bottom: 12px; }
+        .btn { display: inline-flex; align-items: center; gap: 9px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; padding: 14px 28px; border-radius: 8px; text-decoration: none; transition: all 0.2s; }
+        .btn-primary { background: var(--teal); color: #fff; }
+        .btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(46,196,182,0.3); }
+        .btn-ghost { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.4); }
+        .btn-ghost:hover { border-color: #fff; }
+        .btn-outline-navy { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+        .btn-outline-navy:hover { background: var(--navy); color: #fff; }
+
+        /* NAV */
+        #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; padding: 0 28px; max-width: 1100px; margin: 0 auto; }
+        .nav-logo { font-size: 24px; font-weight: 900; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
+        .nav-logo em { color: var(--teal); font-style: normal; }
+        .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+        .nav-links a { color: #475569; text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--navy); }
+        .nav-wa { background: #25D366; color: #fff !important; padding: 8px 18px; border-radius: 7px; font-weight: 700 !important; font-size: 13px !important; display: flex; align-items: center; gap: 7px; }
+        .nav-wa:hover { background: #1ea855 !important; }
+
+        /* HERO */
+        .page-hero { background: linear-gradient(135deg, rgba(13,20,40,0.82) 0%, rgba(22,33,62,0.80) 50%, rgba(26,45,122,0.78) 100%), url('images/Class.JPG') center/cover no-repeat; padding: 140px 0 90px; position: relative; overflow: hidden; }
+        .page-hero::before { content: ''; position: absolute; top: -20%; right: -10%; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(46,196,182,0.08) 0%, transparent 65%); }
+        .page-hero-inner { position: relative; z-index: 1; }
+        .page-hero h1 { font-size: clamp(36px, 5vw, 58px); font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 18px; }
+        .page-hero h1 em { color: var(--teal); font-style: normal; }
+        .page-hero p { font-size: 18px; color: rgba(255,255,255,0.65); max-width: 620px; line-height: 1.8; }
+        .hero-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
+        .hero-tag { background: rgba(46,196,182,0.12); border: 1px solid rgba(46,196,182,0.25); color: var(--teal); font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 30px; }
+
+        /* WHY TRAIN */
+        .why-train { padding: 90px 0; background: var(--gray-light); }
+        .why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 48px; }
+        .why-card { background: #fff; border-radius: 14px; padding: 28px; border: 1.5px solid var(--border); text-align: center; transition: border-color 0.2s, box-shadow 0.2s; }
+        .why-card:hover { border-color: var(--teal); box-shadow: 0 8px 28px rgba(46,196,182,0.1); }
+        .why-icon { font-size: 36px; margin-bottom: 14px; }
+        .why-card h3 { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+        .why-card p { font-size: 13px; color: var(--gray); line-height: 1.7; }
+
+        /* PROGRAMMES */
+        .programmes { padding: 100px 0; background: #fff; }
+        .prog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 52px; }
+        .prog-card { border-radius: 18px; overflow: hidden; border: 1.5px solid var(--border); transition: box-shadow 0.25s, transform 0.25s; }
+        .prog-card:hover { box-shadow: 0 16px 48px rgba(30,42,110,0.1); transform: translateY(-5px); }
+        .prog-card.featured { border-color: var(--teal); }
+        .prog-top { background: var(--navy); padding: 30px 28px; position: relative; }
+        .prog-top.teal-bg { background: linear-gradient(135deg, var(--teal-dark), var(--teal)); }
+        .prog-badge { display: inline-block; background: rgba(46,196,182,0.2); color: var(--teal); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; }
+        .prog-badge.white-badge { background: rgba(255,255,255,0.2); color: #fff; }
+        .prog-top h3 { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+        .prog-top p { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+        .prog-body { padding: 28px; }
+        .prog-modules { list-style: none; display: flex; flex-direction: column; gap: 11px; margin-bottom: 24px; }
+        .prog-modules li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--gray); line-height: 1.5; }
+        .prog-modules li i { color: var(--teal); font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+        .prog-meta { display: flex; gap: 16px; flex-wrap: wrap; padding: 16px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+        .prog-meta-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray); font-weight: 500; }
+        .prog-meta-item i { color: var(--teal); }
+
+        /* TOPICS */
+        .topics { padding: 100px 0; background: var(--gray-light); }
+        .topics-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 48px; }
+        .topic-card { background: #fff; border-radius: 12px; padding: 22px; border: 1.5px solid var(--border); transition: border-color 0.2s; }
+        .topic-card:hover { border-color: var(--teal); }
+        .topic-icon { font-size: 28px; margin-bottom: 12px; }
+        .topic-card h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+        .topic-card p { font-size: 12px; color: var(--gray); line-height: 1.65; }
+
+        /* UPCOMING */
+        .upcoming { padding: 100px 0; background: #fff; }
+        .upcoming-placeholder { background: var(--gray-light); border-radius: 16px; padding: 52px; text-align: center; border: 2px dashed var(--border); }
+        .upcoming-placeholder h3 { font-size: 22px; color: var(--navy); margin-bottom: 12px; }
+        .upcoming-placeholder p { font-size: 15px; color: var(--gray); max-width: 480px; margin: 0 auto 28px; line-height: 1.7; }
+
+        /* FAQ */
+        .faq { padding: 100px 0; background: var(--gray-light); }
+        .faq-list { max-width: 780px; margin: 48px auto 0; display: flex; flex-direction: column; gap: 12px; }
+        .faq-item { background: #fff; border-radius: 12px; border: 1.5px solid var(--border); overflow: hidden; }
+        .faq-q { padding: 20px 24px; font-size: 15px; font-weight: 600; color: var(--navy); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+        .faq-q:hover { background: var(--gray-light); }
+        .faq-q i { color: var(--teal); transition: transform 0.2s; font-size: 14px; }
+        .faq-a { padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s; font-size: 14px; color: var(--gray); line-height: 1.75; }
+        .faq-item.open .faq-a { max-height: 200px; padding: 0 24px 20px; }
+        .faq-item.open .faq-q i { transform: rotate(180deg); }
+
+        /* CTA */
+        .training-cta { padding: 100px 0; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%); text-align: center; }
+        .training-cta h2 { font-size: clamp(28px, 4vw, 46px); color: #fff; margin-bottom: 16px; }
+        .training-cta p { font-size: 17px; color: rgba(255,255,255,0.6); max-width: 560px; margin: 0 auto 36px; line-height: 1.8; }
+        .training-cta-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+        /* FOOTER */
+        footer { background: #090f22; padding: 40px 0; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,255,255,0.3); }
+        .footer-bottom a { color: rgba(255,255,255,0.5); text-decoration: none; }
+        .footer-bottom a:hover { color: var(--teal); }
+
+        /* FLOATING WA */
+        .wa-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 60px; height: 60px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 28px; text-decoration: none; box-shadow: 0 6px 24px rgba(37,211,102,0.45); transition: transform 0.2s; }
+        .wa-fab:hover { transform: scale(1.1); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .why-grid { grid-template-columns: 1fr; }
+            .prog-grid { grid-template-columns: 1fr; }
+            .topics-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+            <img src="images/logo-white.png" alt="a160z" style="height:38px; width:auto; display:block;">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#cases">Case Studies</a></li>
+            <li><a href="index.html#process">How We Work</a></li>
+            <li><a href="training.html" class="active">Training</a></li>
+            <li><a href="about.html">About</a></li>
+            <li>
+                <a href="https://wa.me/601163974161?text=Hi%20a160z!%20I%27d%20like%20to%20enquire%20about%20your%20training%20programmes." target="_blank" class="nav-wa">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+    <div class="container">
+        <div class="page-hero-inner">
+            <span class="section-eyebrow">AI Automation Training</span>
+            <h1>Learn to Build AI Systems.<br><em>Trained by People Who Build Them.</em></h1>
+            <p>Hands-on, practical AI automation training for teams and individuals. We teach the same tools and techniques we use to build production systems for our clients — no fluff, no theory-only sessions.</p>
+            <div class="hero-tags">
+                <span class="hero-tag">n8n Workflow Automation</span>
+                <span class="hero-tag">AI Agent Building</span>
+                <span class="hero-tag">WhatsApp API</span>
+                <span class="hero-tag">Prompt Engineering</span>
+                <span class="hero-tag">Browser Automation</span>
+                <span class="hero-tag">No-Code AI Tools</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- WHY TRAIN WITH A160Z -->
+<section class="why-train">
+    <div class="container">
+        <div style="text-align:center;">
+            <span class="section-eyebrow">Why Train with a160z</span>
+            <h2 style="font-size:clamp(26px,3.5vw,40px);color:var(--navy);margin-bottom:8px;">Not Just Theory. Real Systems.</h2>
+            <p style="font-size:16px;color:var(--gray);max-width:540px;margin:0 auto;">Everything we teach, we build for clients. You learn from practitioners, not presenters.</p>
+        </div>
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="why-icon">🛠️</div>
+                <h3>Build-Along Format</h3>
+                <p>Every session involves actually building something — real workflows, real agents, real integrations. You leave with working systems, not just notes.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">🎯</div>
+                <h3>Industry-Relevant Content</h3>
+                <p>No generic demos. We use real business scenarios — F&B, sales, HR, customer support — so what you learn applies immediately.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">🔄</div>
+                <h3>Post-Training Support</h3>
+                <p>Training doesn't end when the session does. We provide follow-up support to help you apply what you've learned in your actual business.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROGRAMMES -->
+<section class="programmes" id="programmes">
+    <div class="container">
+        <div style="text-align:center;">
+            <span class="section-eyebrow">Our Programmes</span>
+            <h2 style="font-size:clamp(26px,3.5vw,40px);color:var(--navy);">Choose Your Learning Path</h2>
+        </div>
+        <div class="prog-grid">
+
+            <!-- Corporate -->
+            <div class="prog-card">
+                <div class="prog-top">
+                    <div class="prog-badge">For Teams</div>
+                    <h3>Corporate AI Automation Workshop</h3>
+                    <p>Customised training for your operations, tech, or business development team — tailored to your industry and existing tools.</p>
+                </div>
+                <div class="prog-body">
+                    <div class="prog-meta">
+                        <div class="prog-meta-item"><i class="fa-solid fa-users"></i> 5–20 pax</div>
+                        <div class="prog-meta-item"><i class="fa-solid fa-clock"></i> Half-day or Full-day</div>
+                        <div class="prog-meta-item"><i class="fa-solid fa-location-dot"></i> On-site or Online</div>
+                    </div>
+                    <ul class="prog-modules">
+                        <li><i class="fa-solid fa-check"></i> Introduction to AI automation and business use cases</li>
+                        <li><i class="fa-solid fa-check"></i> Hands-on n8n workflow building for your industry</li>
+                        <li><i class="fa-solid fa-check"></i> Connecting AI to your existing tools (Google Workspace, CRM, etc.)</li>
+                        <li><i class="fa-solid fa-check"></i> Building a simple AI agent for a real team task</li>
+                        <li><i class="fa-solid fa-check"></i> Q&A and take-home workflow templates</li>
+                    </ul>
+                    <a href="https://wa.me/601163974161?text=Hi%20a160z%2C%20I%27m%20interested%20in%20the%20Corporate%20AI%20Automation%20Workshop%20for%20my%20team." target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;">
+                        <i class="fa-brands fa-whatsapp"></i> Enquire for Your Team
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bootcamp -->
+            <div class="prog-card featured">
+                <div class="prog-top teal-bg">
+                    <div class="prog-badge white-badge">For Individuals</div>
+                    <h3>AI Automation Bootcamp</h3>
+                    <p>Cohort-based intensive training for entrepreneurs, freelancers, and professionals who want to master AI automation tools from scratch.</p>
+                </div>
+                <div class="prog-body">
+                    <div class="prog-meta">
+                        <div class="prog-meta-item"><i class="fa-solid fa-user"></i> Individual / Small Group</div>
+                        <div class="prog-meta-item"><i class="fa-solid fa-clock"></i> Multi-session Programme</div>
+                        <div class="prog-meta-item"><i class="fa-solid fa-location-dot"></i> Online (Zoom / WhatsApp)</div>
+                    </div>
+                    <ul class="prog-modules">
+                        <li><i class="fa-solid fa-check"></i> n8n foundations — build your first automated workflow</li>
+                        <li><i class="fa-solid fa-check"></i> Connecting LLMs (OpenAI / Gemini) to real workflows</li>
+                        <li><i class="fa-solid fa-check"></i> Building a WhatsApp AI agent from scratch</li>
+                        <li><i class="fa-solid fa-check"></i> Data scraping and lead generation automation</li>
+                        <li><i class="fa-solid fa-check"></i> Capstone project: build your own complete AI system</li>
+                    </ul>
+                    <a href="https://wa.me/601163974161?text=Hi%20a160z%2C%20I%27m%20interested%20in%20the%20AI%20Automation%20Bootcamp." target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;">
+                        <i class="fa-brands fa-whatsapp"></i> Register Interest
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- TOPICS COVERED -->
+<section class="topics">
+    <div class="container">
+        <div style="text-align:center;">
+            <span class="section-eyebrow">What You'll Learn</span>
+            <h2 style="font-size:clamp(26px,3.5vw,40px);color:var(--navy);margin-bottom:8px;">Topics Covered Across Our Programmes</h2>
+        </div>
+        <div class="topics-grid">
+            <div class="topic-card">
+                <div class="topic-icon">⚡</div>
+                <h4>n8n Workflow Automation</h4>
+                <p>Build powerful, event-driven automation workflows without writing complex code. Connect any tools and services.</p>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">🤖</div>
+                <h4>AI Agent Development</h4>
+                <p>Design and build AI agents that understand context, make decisions, and take actions autonomously.</p>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">💬</div>
+                <h4>WhatsApp API Integration</h4>
+                <p>Connect AI agents to WhatsApp Business API to handle customer messages, bookings, and support 24/7.</p>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">🧠</div>
+                <h4>Prompt Engineering</h4>
+                <p>Learn to write effective prompts that get consistent, reliable outputs from LLMs like GPT-4 and Gemini.</p>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">🌐</div>
+                <h4>Browser & Web Automation</h4>
+                <p>Use Puppeteer and Airtop for intelligent web scraping, form filling, and portal interactions at scale.</p>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">🗄️</div>
+                <h4>RAG & Knowledge Bases</h4>
+                <p>Build AI systems that retrieve and reason over your own business documents and data using Supabase.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- UPCOMING CLASSES -->
+<section class="upcoming" id="schedule">
+    <div class="container">
+        <div style="text-align:center; margin-bottom:48px;">
+            <span class="section-eyebrow">Schedule</span>
+            <h2 style="font-size:clamp(26px,3.5vw,40px);color:var(--navy);">Upcoming Classes</h2>
+        </div>
+        <div class="upcoming-placeholder">
+            <h3>📅 Dates Coming Soon</h3>
+            <p>We're finalising our upcoming bootcamp and workshop schedule. Register your interest now and we'll notify you as soon as dates are confirmed — you'll also get early-bird access.</p>
+            <a href="https://wa.me/601163974161?text=Hi%20a160z%2C%20I%27d%20like%20to%20register%20my%20interest%20for%20upcoming%20AI%20training%20classes." target="_blank" class="btn btn-primary">
+                <i class="fa-brands fa-whatsapp"></i> Register Interest via WhatsApp
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+    <div class="container">
+        <div style="text-align:center;">
+            <span class="section-eyebrow">FAQ</span>
+            <h2 style="font-size:clamp(26px,3.5vw,40px);color:var(--navy);">Common Questions</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    Do I need coding experience to join? <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="faq-a">No coding experience is required for most of our programmes. We use visual, no-code tools like n8n that are designed for non-developers. A basic understanding of business processes is all you need.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    Are the sessions conducted in English or Bahasa Malaysia? <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="faq-a">Sessions are primarily conducted in English, with Bahasa Malaysia support available upon request. For corporate workshops, we're happy to accommodate your team's preferred language.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    Can the corporate workshop be customised for our industry? <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="faq-a">Absolutely — customisation is a core part of our corporate offering. We tailor the content, examples, and hands-on exercises to your specific industry, tools, and business processes.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    What tools and software will I need? <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="faq-a">For most programmes, you'll need a laptop with internet access. We'll guide you through setting up free accounts for n8n, Google Workspace, and any other tools required before the session begins.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">
+                    Is there support after the training? <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="faq-a">Yes. All participants get post-training support via WhatsApp for questions that come up as you apply what you've learned. Corporate clients also receive a documentation package and follow-up check-in session.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="training-cta">
+    <div class="container">
+        <h2>Ready to Start Learning?</h2>
+        <p>Drop us a message on WhatsApp — tell us what you'd like to learn, and we'll recommend the right programme for you.</p>
+        <div class="training-cta-btns">
+            <a href="https://wa.me/601163974161?text=Hi%20a160z%2C%20I%27m%20interested%20in%20your%20AI%20training%20programmes.%20Can%20you%20tell%20me%20more?" target="_blank" class="btn btn-primary" style="font-size:16px;padding:16px 32px;">
+                <i class="fa-brands fa-whatsapp"></i> Enquire via WhatsApp
+            </a>
+            <a href="mailto:inquiry@a160z.com" class="btn btn-ghost">
+                <i class="fa-solid fa-envelope"></i> Email Us Instead
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-bottom">
+            <span>© 2025 a160z. All rights reserved.</span>
+            <span><a href="index.html">Home</a> &nbsp;·&nbsp; <a href="about.html">About</a> &nbsp;·&nbsp; <a href="mailto:inquiry@a160z.com">inquiry@a160z.com</a></span>
+        </div>
+    </div>
+</footer>
+
+<a href="https://wa.me/601163974161" target="_blank" class="wa-fab">
+    <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<script>
+    function toggleFaq(el) {
+        const item = el.parentElement;
+        item.classList.toggle('open');
+    }
+</script>
+</body>
+</html>
