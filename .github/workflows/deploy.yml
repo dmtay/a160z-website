@@ -9,17 +9,19 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger cPanel Git Deployment
-        run: |
-          response=$(curl -s -o /tmp/cpanel_response.txt -w "%{http_code}" -X POST \
-            "https://${{ secrets.CPANEL_URL }}:2083/execute/VersionControlDeployment/create" \
-            -H "Authorization: cpanel ${{ secrets.CPANEL_USERNAME }}:${{ secrets.CPANEL_API_TOKEN }}" \
-            --data-urlencode "repository_root=/home/apppaymy/public_html/a160z.com" \
-            --insecure)
-          echo "HTTP Status: $response"
-          cat /tmp/cpanel_response.txt
-          if [ "$response" != "200" ]; then
-            echo "Deployment failed with status $response"
-            exit 1
-          fi
-          echo "Deployment triggered successfully!"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          server-dir: /public_html/a160z.com/
+          local-dir: ./
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
