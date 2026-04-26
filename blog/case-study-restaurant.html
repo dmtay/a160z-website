@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: Restaurant Private Event Booking System — a160z</title>
+    <meta name="description" content="How a160z built a WhatsApp AI agent that fully automates private event and special occasion bookings for a KL restaurant — from company dinners to marriage proposals.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="192x192" href="../favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #fff; line-height: 1.7; }
+        :root {
+            --navy: #1e2a6e; --navy-dark: #16213e; --teal: #2ec4b6;
+            --gray-light: #f8f9fc; --gray: #64748b; --border: #e2e8f0;
+        }
+        .container { max-width: 780px; margin: 0 auto; padding: 0 28px; }
+        .container-wide { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+
+        /* NAV */
+        nav { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+        .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 28px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo img { height: 36px; width: auto; display: block; }
+        .nav-logo { text-decoration: none; }
+        .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+        .nav-links a { text-decoration: none; color: #475569; font-size: 14px; font-weight: 500; transition: color .2s; }
+        .nav-links a:hover { color: var(--navy); }
+        .nav-wa { background: #25d366; color: #fff !important; padding: 8px 16px; border-radius: 8px; font-size: 13px !important; display: flex; align-items: center; gap: 6px; }
+        .nav-wa:hover { background: #20bc5a; }
+
+        /* HERO */
+        .blog-hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%); padding: 72px 0 56px; }
+        .blog-breadcrumb { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+        .blog-breadcrumb a { color: var(--teal); text-decoration: none; }
+        .blog-breadcrumb a:hover { text-decoration: underline; }
+        .blog-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(46,196,182,0.15); border: 1px solid rgba(46,196,182,0.4); color: var(--teal); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 6px 14px; border-radius: 50px; margin-bottom: 20px; }
+        .blog-hero h1 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 20px; }
+        .blog-meta { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 28px; }
+        .blog-meta-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.6); }
+        .blog-meta-item i { color: var(--teal); font-size: 13px; }
+
+        /* HERO IMAGE */
+        .hero-img-wrap { margin-top: -1px; }
+        .hero-img-wrap img { width: 100%; max-height: 420px; object-fit: cover; display: block; }
+
+        /* ARTICLE */
+        .article { padding: 60px 0 20px; }
+        .article h2 { font-size: 24px; font-weight: 800; color: var(--navy); margin: 48px 0 16px; }
+        .article h3 { font-size: 18px; font-weight: 700; color: var(--navy); margin: 32px 0 12px; }
+        .article p { font-size: 16px; color: #334155; margin-bottom: 18px; line-height: 1.8; }
+        .article ul { margin: 0 0 18px 20px; }
+        .article ul li { font-size: 16px; color: #334155; margin-bottom: 8px; line-height: 1.7; }
+        .article strong { color: var(--navy); font-weight: 700; }
+
+        /* HIGHLIGHT BOX */
+        .highlight-box { background: #f0fdf9; border-left: 4px solid var(--teal); border-radius: 0 12px 12px 0; padding: 20px 24px; margin: 32px 0; }
+        .highlight-box p { margin: 0; color: #0f766e; font-weight: 500; font-size: 15px; }
+
+        /* RESULT CARDS */
+        .result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0; }
+        .result-card { background: var(--gray-light); border-radius: 12px; padding: 24px 20px; text-align: center; border: 1px solid var(--border); }
+        .result-num { font-size: 36px; font-weight: 900; color: var(--teal); line-height: 1; margin-bottom: 8px; }
+        .result-label { font-size: 13px; color: var(--gray); font-weight: 500; }
+
+        /* TECH STACK */
+        .tech-section { background: var(--gray-light); border-radius: 16px; padding: 32px; margin: 40px 0; }
+        .tech-section h3 { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.08em; }
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+        .tech-tag { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 600; color: var(--navy); display: flex; align-items: center; gap: 6px; }
+        .tech-tag i { color: var(--teal); }
+
+        /* WORKFLOW */
+        .workflow-section { margin: 40px 0; }
+        .workflow-section h3 { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+        .workflow-img { width: 100%; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; background: #0d1117; }
+        .workflow-img img { width: 100%; display: block; }
+        .workflow-caption { font-size: 12px; color: var(--gray); text-align: center; margin-top: 8px; }
+
+        /* DIVIDER */
+        .divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+        /* CTA */
+        .cta-section { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%); border-radius: 20px; padding: 52px 40px; text-align: center; margin: 60px 0; }
+        .cta-section .eyebrow { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--teal); margin-bottom: 16px; }
+        .cta-section h2 { font-size: clamp(22px, 3vw, 32px); font-weight: 900; color: #fff; margin-bottom: 16px; line-height: 1.2; }
+        .cta-section p { color: rgba(255,255,255,0.65); font-size: 15px; max-width: 520px; margin: 0 auto 32px; line-height: 1.7; }
+        .btn { display: inline-flex; align-items: center; gap: 9px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; padding: 14px 28px; border-radius: 8px; text-decoration: none; border: none; cursor: pointer; transition: all .2s; }
+        .btn-primary { background: var(--teal); color: #fff; }
+        .btn-primary:hover { background: #22a89b; transform: translateY(-1px); }
+        .btn-ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.3); }
+        .btn-ghost:hover { border-color: rgba(255,255,255,0.7); }
+        .cta-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+        /* FOOTER */
+        footer { background: var(--navy-dark); padding: 48px 0 28px; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; margin: 12px 0 20px; max-width: 280px; }
+        .footer-socials { display: flex; gap: 10px; }
+        .soc-btn { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 14px; transition: all .2s; }
+        .soc-btn:hover { background: var(--teal); color: #fff; }
+        .footer-col-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.3); margin-bottom: 16px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { font-size: 13px; color: rgba(255,255,255,0.55); text-decoration: none; transition: color .2s; }
+        .footer-links a:hover { color: var(--teal); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; font-size: 12px; color: rgba(255,255,255,0.25); text-align: center; }
+
+        /* FLOATING WA */
+        .wa-fab { position: fixed; bottom: 28px; right: 28px; width: 56px; height: 56px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 26px; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4); z-index: 999; transition: transform .2s; }
+        .wa-fab:hover { transform: scale(1.1); }
+
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+            .result-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .cta-section { padding: 36px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">
+            <img src="../images/logo-white.png" alt="a160z">
+        </a>
+        <ul class="nav-links">
+            <li><a href="../index.html#services">Services</a></li>
+            <li><a href="../index.html#cases">Case Studies</a></li>
+            <li><a href="../index.html#process">How We Work</a></li>
+            <li><a href="../training.html">Training</a></li>
+            <li><a href="../about.html">About</a></li>
+            <li>
+                <a href="https://wa.me/601163974161?text=Hi%20a160z!%20I%27d%20like%20to%20know%20more%20about%20your%20AI%20services." target="_blank" class="nav-wa">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="blog-hero">
+    <div class="container">
+        <p class="blog-breadcrumb"><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../index.html#cases">Case Studies</a> &nbsp;/&nbsp; Restaurant Special Event System</p>
+        <div class="blog-tag"><i class="fa-solid fa-calendar-check"></i> Case Study 01 &nbsp;·&nbsp; Restaurant</div>
+        <h1>From WhatsApp Back-and-Forth to a<br>Private Event Booking Machine</h1>
+        <div class="blog-meta">
+            <div class="blog-meta-item"><i class="fa-solid fa-location-dot"></i> Kuala Lumpur, Malaysia</div>
+            <div class="blog-meta-item"><i class="fa-solid fa-industry"></i> F&B / Restaurant</div>
+            <div class="blog-meta-item"><i class="fa-solid fa-clock"></i> Built in 1 Week</div>
+            <div class="blog-meta-item"><i class="fa-solid fa-tag"></i> From RM300 / month</div>
+        </div>
+    </div>
+</section>
+
+<!-- HERO IMAGE -->
+<div class="hero-img-wrap">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80" alt="Restaurant special event dining" loading="lazy">
+</div>
+
+<!-- ARTICLE -->
+<div class="article">
+    <div class="container">
+
+        <h2>The Problem</h2>
+        <p>Picture a restaurant in Kuala Lumpur that does more than just walk-in dining. They take bookings for <strong>private events</strong> — company dinners, team celebrations, marriage proposals, birthday parties, anniversary nights. Sometimes a guest wants a single table tucked away. Sometimes a corporate client wants to book the entire restaurant exclusively for a product launch dinner.</p>
+        <p>Every single enquiry came in through WhatsApp. And every single one required a human to handle it.</p>
+        <p>The conversation would go back and forth: What date? How many guests? Which section — half the restaurant or the full venue? Do you want a custom menu? Can we add decorations? Each booking was a thread of 10 to 20 messages, manual calendar checks, and handwritten notes. Miss a message and you double-book. Forget to block the calendar and two events clash on the same night.</p>
+        <p>It was chaotic — and the owner was the one absorbing all of it.</p>
+
+        <div class="highlight-box">
+            <p>"Every private event enquiry became a long WhatsApp conversation. We were spending more time negotiating bookings than actually preparing for the events."</p>
+        </div>
+
+        <h2>What We Built</h2>
+        <p>a160z built a <strong>WhatsApp AI Private Event Booking Agent</strong> — a conversational AI system that handles the entire enquiry-to-confirmation process automatically, no human intervention needed.</p>
+        <p>Here's how it works for a customer wanting to book a company dinner:</p>
+        <ul>
+            <li>The customer messages the restaurant's WhatsApp number with their enquiry.</li>
+            <li>The AI agent responds naturally — asking for the event date, number of guests, seating preference (single table, multiple tables, half venue, or full exclusive closure), and any custom menu requirements.</li>
+            <li>It checks Google Calendar in real time to confirm availability for the requested date and configuration.</li>
+            <li>If available, it captures all booking details, confirms with the customer, and creates the calendar event automatically — with full details logged to Google Sheets.</li>
+            <li>If the date is unavailable, it suggests alternative slots and continues the conversation until a booking is locked in.</li>
+        </ul>
+        <p>For a marriage proposal booking, the agent handles the intimacy of the request with the same care — capturing seating preferences, special decorations requests, and menu choices, all within WhatsApp. It even handles voice notes, transcribing audio messages in Mandarin, Malay, or English seamlessly.</p>
+
+        <h2>The Solution Architecture</h2>
+
+        <div class="workflow-section">
+            <div class="workflow-img">
+                <img src="../images/workflow-restaurant.png" alt="n8n workflow diagram for restaurant booking system" loading="lazy">
+            </div>
+            <p class="workflow-caption">The n8n automation workflow powering the restaurant special event booking system</p>
+        </div>
+
+        <p>The workflow is built on <strong>n8n</strong>, an open-source automation platform, with Google Gemini as the AI brain. When a WhatsApp message arrives, it flows through a structured pipeline: language detection and transcription → information gathering → calendar availability check → booking confirmation or rescheduling suggestion.</p>
+        <p>Everything is logged automatically to Google Sheets for the owner to review at any time — a clean record of every booking, every cancellation, every message.</p>
+
+        <div class="tech-section">
+            <h3>Technology Used</h3>
+            <div class="tech-tags">
+                <div class="tech-tag"><i class="fa-solid fa-circle-nodes"></i> n8n Automation</div>
+                <div class="tech-tag"><i class="fa-brands fa-google"></i> Google Gemini (AI)</div>
+                <div class="tech-tag"><i class="fa-regular fa-calendar"></i> Google Calendar</div>
+                <div class="tech-tag"><i class="fa-solid fa-table"></i> Google Sheets</div>
+                <div class="tech-tag"><i class="fa-brands fa-whatsapp"></i> WhatsApp Cloud API</div>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <h2>The Results</h2>
+        <p>Within days of going live, the owner stopped touching bookings entirely. The AI agent handles every inquiry, every confirmation, every rescheduling — 24 hours a day, 7 days a week.</p>
+
+        <div class="result-grid">
+            <div class="result-card">
+                <div class="result-num">0</div>
+                <div class="result-label">Manual follow-ups since launch</div>
+            </div>
+            <div class="result-card">
+                <div class="result-num">24/7</div>
+                <div class="result-label">Booking enquiries auto-responded</div>
+            </div>
+            <div class="result-card">
+                <div class="result-num">From RM300</div>
+                <div class="result-label">Per month — less than one part-timer</div>
+            </div>
+        </div>
+
+        <p>The restaurant now operates with full tables at every special event session — without a single staff member dedicated to managing reservations. The owner spends that time on the kitchen, the menu, and the guest experience instead.</p>
+        <p>Total build time: <strong>1 week</strong>. Ongoing cost: <strong>from RM300/month</strong> — a fraction of what a part-time booking coordinator would cost.</p>
+
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="container">
+    <div class="cta-section">
+        <p class="eyebrow">Free 1-Hour Consultation</p>
+        <h2>What's the Repetitive Task in Your Business That AI Could Handle?</h2>
+        <p>You don't need to know what the solution looks like. Just tell us the problem — the manual work you're tired of doing, that you wouldn't want to hire a full-time employee for. We'll figure out the rest in a free 1-hour session.</p>
+        <div class="cta-btns">
+            <a href="https://wa.me/601163974161?text=Hi%20a160z%2C%20I%27d%20like%20to%20book%20a%20free%201-hour%20AI%20consultation%20for%20my%20business." target="_blank" class="btn btn-primary">
+                <i class="fa-brands fa-whatsapp"></i> Claim My Free 1-Hour Session
+            </a>
+            <a href="mailto:inquiry@a160z.com" class="btn btn-ghost">
+                <i class="fa-solid fa-envelope"></i> Email Us Instead
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container-wide">
+        <div class="footer-grid">
+            <div>
+                <img src="../images/logo-white-only.png" alt="a160z" style="height:32px; width:auto; margin-bottom:14px; display:block;">
+                <p class="footer-tagline">Making Intelligence Work. We help SMEs and enterprises build production-ready AI systems that replace manual work — serving clients since March 2024.</p>
+                <div class="footer-socials">
+                    <a href="https://www.linkedin.com/company/a160z/" target="_blank" class="soc-btn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://www.youtube.com/@a160zAI" target="_blank" class="soc-btn" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://wa.me/601163974161" target="_blank" class="soc-btn" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-title">Navigation</div>
+                <ul class="footer-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.html#services">Services</a></li>
+                    <li><a href="../index.html#cases">Case Studies</a></li>
+                    <li><a href="../training.html">Training</a></li>
+                    <li><a href="../about.html">About Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2025 a160z. All rights reserved.</div>
+    </div>
+</footer>
+
+<a href="https://wa.me/601163974161?text=Hi%20a160z!%20I%27d%20like%20to%20know%20more%20about%20your%20AI%20services." target="_blank" class="wa-fab" title="Chat with us on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+</body>
+</html>
